@@ -1,0 +1,116 @@
+<div class = 'main'>
+<div class = 'left'>
+  <div class = 'addHero' [formGroup]="heroForm">
+    <form class="name-form">
+      <mat-form-field class="name-full-width" appearance="fill">
+        <mat-label>Имя героя</mat-label>
+        <input matInput placeholder="Имя героя" formControlName="name" value="">
+      </mat-form-field>
+    </form>
+    <form class="power-form">
+      <mat-form-field class="power-full-width" appearance="fill">
+        <mat-label>Сила героя</mat-label>
+        <input matInput placeholder="Сила героя" formControlName="power" value="">
+      </mat-form-field>
+    </form>
+    <mat-form-field appearance="fill" class = 'chooseAbilities' >
+      <mat-label>Способности </mat-label>
+      <mat-select formControlName="abilities"  multiple>
+        <mat-option *ngFor="let ability of abilitiesList" [value]="ability">{{ability}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <form class="level-form">
+      <mat-form-field class="level-full-width" appearance="fill">
+        <mat-label>Начальный уровень героя</mat-label>
+        <input matInput placeholder="Начальный уровень героя" formControlName="startLevel" value="">
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" [disabled] = "!heroForm.valid" class = 'makeHero' (click) = 'addHero()'>Создать героя</button>
+  </div>
+  <div class = 'addAbility' [formGroup]="abilityForm">
+    <div class = 'top'>
+      <div class = 'title'>Добавление способностей</div>
+    </div>
+    <form class="ability-form">
+      <mat-form-field class="ability-full-width" appearance="fill">
+        <mat-label>Способность</mat-label>
+        <input matInput placeholder="Введите способность" formControlName="newAbility" value="">
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" class = 'makeAbility' [disabled] = "!abilityForm.valid"(click) = 'addAbility()' >Добавить способность</button>
+  </div>
+</div>
+<div class = 'right'>
+  <div class ='filter'>
+<div class = 'filter1' style="display:flex;height:50%;" [formGroup]="heroLevelSortForm">
+  <div style ='display: flex'>
+    Уровень героя от :
+  </div>
+  <input type="text" pInputText class="p-inputtext-sm" placeholder="" style = "display: flex; width: 6%; height:30%" formControlName="fromLevel" >
+  <div style ='display: flex'>
+    до :
+  </div>
+  <input type="text" pInputText class="p-inputtext-sm" placeholder="" style = "display: flex; width: 6%; height:30%" formControlName="toLevel">
+  <button mat-button color="primary" (click) = 'sort()' style = "display:flex;">Фильтровать</button>
+  <button mat-button color="primary" style = "display:flex;" (click) = 'resetFilters()'>Сбросить фильтры </button>
+</div>
+    <div class = 'filter2'[formGroup]="nameSearchForm">
+      <div style ='display: flex'>
+        Поиск по имени :
+      </div>
+      <input type="text" pInputText class="p-inputtext-sm" placeholder="" style = "display: flex; width: 30%; height:30%" formControlName="nameSearch" (keypress)="nameSearch($event)">
+      <div style ='display: flex; width: 30%; justify-content: center' [formGroup] = "selectedAbilitiesForm">
+        <div style = "display:flex; width: 100%; align-items: center; justify-content: space-between;">
+        <mat-label >Способности</mat-label>
+        <mat-select  multiple formControlName="selectedAbility" style="display: flex; width: 40% " (blur) = "filterAbilities()"  >
+          <mat-option *ngFor="let ability of this.abilitiesList" [value]="ability">{{ability}} </mat-option>
+        </mat-select>
+          </div>
+      </div>
+      <input type = 'image' src = '..\assets\images\sortup.png' style = 'display: flex; height: 30px; width: 40px' (click) = 'sortClick($event)'>
+      </div>
+  </div>
+  <div class = 'listOfHeroes' id ='listOfHeroes'>
+    <cdk-accordion class="example-accordion" >
+      <cdk-accordion-item class = 'accordion'
+        *ngFor="let hero of listOfHeroes; let index = index;"
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.id]="'accordion-header-' + index"
+        [attr.aria-expanded]="accordionItem.expanded"
+        [attr.aria-controls]="'accordion-body-' + index">
+        <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+          {{ hero.name }} {{hero.startLevel}} ур.
+            <span class="example-accordion-item-description">
+          Нажмите чтобы {{ accordionItem.expanded ? 'закрыть' : 'открыть' }}
+        </span>
+        </div>
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+          [attr.id]="'accordion-body-' + index"
+          [attr.aria-labelledby]="'accordion-header-' + index">
+          Сила : {{hero.power}}
+          <div class = 'currentHeroAbilities' style="align-items: center; flex-wrap: wrap;" >
+            Способности:
+            <mat-chip-list aria-label="Fish selection" style="display: flex; margin: 0px 0px 0px 5px">
+              <mat-chip style="display: flex"
+                *ngFor="let ability of hero.abilities"
+              >
+              {{ability}}
+              </mat-chip>
+            </mat-chip-list>
+            </div>
+          <div class = 'bot' id = {{hero.id}}>
+          <button mat-button color="primary" class = 'editButton'  (click)="openDialog($event)">Редактировать</button>
+            </div>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+
+  </div>
+</div>
+

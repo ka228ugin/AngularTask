@@ -1,0 +1,31 @@
+<body style="display:flex; flex-direction: column; justify-content: space-between" [formGroup]="editForm"
+      xmlns:value="http://www.w3.org/1999/xhtml">
+<div class = 'top' style = 'display: flex; justify-content: space-between' >
+  <h1 style = "display: flex; margin: 3px 0px 0px 0px;  ">Редактировать героя </h1>
+</div>
+<div class = 'name' style = 'display:flex; justify-content: space-between'>
+  Имя:
+  <input type="text" pInputText class="p-inputtext-sm"  style = "display: flex;" formControlName="name"   >
+</div>
+<div class = 'power' style = 'display:flex; justify-content: space-between' >
+  Сила:
+  <input type="text" pInputText class="p-inputtext-sm" placeholder="" style = "display: flex;"   formControlName="power" >
+</div>
+<div class = 'abilities' style = 'display:flex; justify-content: space-between'>
+  Способности:
+  <mat-select  multiple selected = 'all' class = 'select' formControlName="abilities"  >
+    <mat-option *ngFor="let ability of this.data.abilities" [value]="ability">{{ability}} </mat-option>
+  </mat-select>
+</div>
+<div class = 'startLevel' style = 'display:flex; justify-content: space-between'>
+  Начальный уровень:
+  <input type="text" pInputText class="p-inputtext-sm" placeholder="" style = "display: flex;" formControlName="startLevel"  >
+</div>
+<div class = 'bot' style = "display:flex; justify-content: space-between; align-items: center; width: 100%">
+  <button mat-raised-button mat-dialog-close color ="warn">Закрыть</button>
+  <div class = 'saveButton' style = 'display:flex; justify-content: flex-end'>
+    <button mat-raised-button color="primary" mat-dialog-close  (click) = 'edit()'>Сохранить изменения</button>
+  </div>
+</div>
+
+</body>
