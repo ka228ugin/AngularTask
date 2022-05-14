@@ -12,7 +12,7 @@ export class EditComponent implements OnInit {
   public editForm: FormGroup = new FormGroup({
     'name': new FormControl(this.data.name, Validators.required),
     'power': new FormControl(this.data.power, Validators.required),
-    'abilities': new FormControl(this.data.abilities),
+    'abilities': new FormControl(this.data.selectedAbilities),
     'startLevel': new FormControl(this.data.startLevel, Validators.required),
   })
   constructor(@Inject(MAT_DIALOG_DATA) public data: {
@@ -27,13 +27,13 @@ export class EditComponent implements OnInit {
     this.editForm = new FormGroup({
       'name': new FormControl(data.name, Validators.required),
       'power': new FormControl(data.power, Validators.required),
-      'abilities': new FormControl(data.abilities),
+      'abilities': new FormControl(data.selectedAbilities),
       'startLevel': new FormControl(data.startLevel, Validators.required),
     })
   }
 
   ngOnInit(): void {
-
+  console.log(this.data.abilities);
   }
   ngOnDestroy(): void {}
   public edit():void {

@@ -15,6 +15,7 @@ import {EditComponent} from "./entities/components/edit/edit.component";
 })
 
 export class AppComponent {
+  public arrayOfAbilities:any= [];
   public list: string [] = [];
   public abilitiesList = new Set();
   public listOfHeroes: any = ``;
@@ -91,7 +92,7 @@ export class AppComponent {
         return a.startLevel - b.startLevel
       });
     })
-
+    this.heroForm.reset();
   }
 
   public addAbility() {
@@ -104,6 +105,7 @@ export class AppComponent {
       }
     )
     this.sortData();
+    this.abilityForm.reset();
   }
 
   public sortData(): void {
@@ -256,6 +258,7 @@ export class AppComponent {
   }
 
   public resetFilters() {
+    console.log(this.abilitiesList);
     this.listOfHeroes = this.copyHeroes.slice(0);
     if (!this.sortDown) {
       this.listOfHeroes.sort(function (a: HeroInterface, b: HeroInterface) {
@@ -266,7 +269,9 @@ export class AppComponent {
         return b.startLevel - a.startLevel
       });
     }
-
+    this.heroLevelSortForm.reset();
+   this.selectedAbilitiesForm.reset();
+   this.nameSearchForm.reset();
   }
 
   public nameSearch(e: any) {
@@ -297,6 +302,9 @@ export class AppComponent {
   }
 
   public openDialog(e: any) {
+    this.arrayOfAbilities = [];
+    this.abilitiesList.forEach(ability => this.arrayOfAbilities.push(ability));
+    console.log(this.arrayOfAbilities)
     let hero: any = '';
     let id: number = e.target.parentNode.parentNode.id;
     for (let i = 0; i < this.listOfHeroes.length; i++) {
@@ -313,7 +321,7 @@ export class AppComponent {
         name: hero.name,
         power: hero.power,
         selectedAbilities: hero.abilities,
-        abilities: this.abilitiesList,
+        abilities: this.arrayOfAbilities,
         startLevel: hero.startLevel,
         id: hero.id,
       },
@@ -323,10 +331,10 @@ export class AppComponent {
   }
 
   public getAbilities() {
-    for (let i = 0; i < this.listOfHeroes.length; i++) {
-      for (let j = 0; j < this.listOfHeroes[i].abilities.length; j++) {
-        console.log(this.listOfHeroes[i].abilities[j]);
-        this.abilitiesList.add((this.listOfHeroes[i]).abilities[j]);
+    for (let i = 0; i < this.copyHeroes.length; i++) {
+      for (let j = 0; j < this.copyHeroes[i].abilities.length; j++) {
+        console.log(this.copyHeroes[i].abilities[j]);
+        this.abilitiesList.add((this.copyHeroes[i]).abilities[j]);
       }
     }
   }

@@ -1,7 +1,7 @@
 <div class = 'main'>
 <div class = 'left'>
   <div class = 'addHero' [formGroup]="heroForm">
-    <form class="name-form">
+    <form class="name-form" >
       <mat-form-field class="name-full-width" appearance="fill">
         <mat-label>Имя героя</mat-label>
         <input matInput placeholder="Имя героя" formControlName="name" value="">
@@ -25,19 +25,25 @@
         <input matInput placeholder="Начальный уровень героя" formControlName="startLevel" value="">
       </mat-form-field>
     </form>
-    <button mat-raised-button color="primary" [disabled] = "!heroForm.valid" class = 'makeHero' (click) = 'addHero()'>Создать героя</button>
+    <div class = 'heroBott' style="display:flex; width: 100%;  justify-content: flex-end">
+    <button mat-raised-button color="primary" style="display: flex;height: 100%; justify-content: center; align-items: center; margin: 0 0 0 10px " [disabled] = "!heroForm.valid" class = 'makeHero' (click) = 'addHero()'>Создать героя</button>
+    </div>
   </div>
   <div class = 'addAbility' [formGroup]="abilityForm">
-    <div class = 'top'>
-      <div class = 'title'>Добавление способностей</div>
+    <div class = 'top' style="display: flex; height: 15%; width: 100%">
+      <div class = 'title' style="width: 100%;height: 100%">Добавление способностей</div>
     </div>
+    <div class = 'mid' style="display: flex;width: 100%;height: 35%">
     <form class="ability-form">
       <mat-form-field class="ability-full-width" appearance="fill">
         <mat-label>Способность</mat-label>
         <input matInput placeholder="Введите способность" formControlName="newAbility" value="">
       </mat-form-field>
     </form>
-    <button mat-raised-button color="primary" class = 'makeAbility' [disabled] = "!abilityForm.valid"(click) = 'addAbility()' >Добавить способность</button>
+    </div>
+    <div class = "abilitiesBott" style="display: flex;width: 100%;height: 25%; justify-content: flex-end">
+    <button mat-raised-button color="primary" style="display: flex;height: 80%; justify-content: center;align-items: center;margin: 0 0 0 15px" class = 'makeAbility' [disabled] = "!abilityForm.valid"(click) = 'addAbility()' >Добавить способность</button>
+      </div>
   </div>
 </div>
 <div class = 'right'>
@@ -67,7 +73,7 @@
         </mat-select>
           </div>
       </div>
-      <input type = 'image' src = '..\assets\images\sortup.png' style = 'display: flex; height: 30px; width: 40px' (click) = 'sortClick($event)'>
+      <input type = 'image' src = '..\assets\images\sortup.png' style = 'display: flex; height: 25px; width: 40px' (click) = 'sortClick($event)'>
       </div>
   </div>
   <div class = 'listOfHeroes' id ='listOfHeroes'>
@@ -89,12 +95,15 @@
         </div>
         <div
           class="example-accordion-item-body"
+          style="display:flex;flex-direction: column;justify-content: space-between;"
           role="region"
           [style.display]="accordionItem.expanded ? '' : 'none'"
           [attr.id]="'accordion-body-' + index"
           [attr.aria-labelledby]="'accordion-header-' + index">
+          <div class = "accTop" style="display:flex;height: 30%;width: 100%; align-items: center">
           Сила : {{hero.power}}
-          <div class = 'currentHeroAbilities' style="align-items: center; flex-wrap: wrap;" >
+            </div>
+          <div class = 'currentHeroAbilities' style="align-items: center;display: flex; flex-wrap: wrap;height: 30%;width: 100%" >
             Способности:
             <mat-chip-list aria-label="Fish selection" style="display: flex; margin: 0px 0px 0px 5px">
               <mat-chip style="display: flex"
@@ -104,7 +113,7 @@
               </mat-chip>
             </mat-chip-list>
             </div>
-          <div class = 'bot' id = {{hero.id}}>
+          <div class = 'bot' style="display: flex;height: 30%" id = {{hero.id}}>
           <button mat-button color="primary" class = 'editButton'  (click)="openDialog($event)">Редактировать</button>
             </div>
         </div>
